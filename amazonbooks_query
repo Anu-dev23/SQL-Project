@@ -1,0 +1,65 @@
+CREATE DATABASE AMAZONBOOKS;
+USE AMAZONBOOKS;
+CREATE TABLE BOOKS(
+Rank_ INT PRIMARY KEY,
+Booktitle VARCHAR(150),
+BookPrice DECIMAL(7,2),
+Rating  DECIMAL(2,1),
+Author VARCHAR(50),
+YearOfPublication INT,
+Genre VARCHAR(150)
+);
+INSERT INTO Books VALUES 
+(1, 'Iron Flame (The Empyrean, 2)', 1528.00, 4.1, 'Rebecca Yarros', 2023, 'Fantasy Romance'),
+(2, 'The Woman in Me', 1737.00, 4.5, 'Britney Spears', 2023, 'Memoir'),
+(3, 'My Name is Barbra', 1650.00, 4.5, 'Barbra Streisand', 2023, 'Autobiography'),
+(4, 'Friends, Lovers, and the Big Terrible Thing: A Memoir', 1991.00, 4.4, 'Matthew Perry', 2023, 'Memoir'),
+(5, 'How to Catch a Turkey', 472.00, 4.8, 'Adam Wallace', 2018, 'Childrens, Fiction'),
+(6, 'Fourth Wing (The Empyrean, 1)', 1410.00, 4.8, 'Rebecca Yarros', 2023, 'Fantasy'),
+(7, 'Unwoke: How to Defeat Cultural Marxism in America', 617.00, 4.8, 'Unknown', 2023, 'Nonfiction, Politics'),
+(8, 'No Brainer (Diary of a Wimpy Kid Book 18)', 702.00, 4.8, 'Jeff Kinney', 2023, 'Humor, Middle Grade'),
+(9, 'Killers of the Flower Moon: The Osage Murders and the Birth of the FBI', 1821.00, 4.4, 'David Grann', 2017, 'Nonfiction, True Crime'),
+(10, 'All the Light We Cannot See: A Novel', 994.00, 4.5, 'Anthony Doerr', 2014, 'Historical Fiction'),
+(11, 'The Ballad of Songbirds and Snakes (A Hunger Games Novel)', 1660.00, 4.6, 'Suzanne Collins', 2020, 'Adventure, War, Science fiction, Romance, Action, Thriller'),
+(12, 'Night (Night)', 1394.00, 4.7, 'Elie Wiesel', 1960, 'Memoir'),
+(13, 'Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones', 1144.00, 4.8, 'James Clear', 2018, 'Self-improvement, Nonfiction'),
+(14, 'Stocking Stuffer Mad Libs: World’s Greatest Word Game', 322.00, 4.8, 'Leigh Olsen', 2018, 'Childrens, Storytime, Fiction'),
+(15, 'The 48 Laws of Power', 1147.00, 4.7, 'Robert Greene', 1998, 'Nonfiction');
+
+SELECT*FROM Books;
+SELECT Genre, COUNT(*) AS NumberOfBooks FROM Books
+GROUP BY Genre
+ORDER BY NumberOfBooks DESC;
+
+SELECT Genre,ROUND(AVG(BOOKPRICE))AS Averageprice FROM Books
+GROUP BY Genre
+ORDER BY AveragePrice DESC;
+
+SELECT * FROM Books
+WHERE BookPrice>(SELECT AVG(BookPrice) FROM Books);
+
+SELECT BookTitle,BookPrice,Rating FROM Books
+ORDER BY Rating DESC,BookPrice DESC LIMIT 5;
+
+CREATE TABLE Genres(
+Author VARCHAR(100),
+Genre VARCHAR(100));
+INSERT INTO genres (author, genre) VALUES
+('Rebecca Yarros', 'Fantasy Romance'),
+('Britney Spears', 'Memoir'),
+('Barbra Streisand', 'Autobiography'),
+('Matthew Perry', 'Memoir'),
+('Adam Wallace', 'Childrens, Fiction'),
+('Unknown', 'Nonfiction, Politics'),
+('Jeff Kinney', 'Humor, Middle Grade'),
+('David Grann', 'Nonfiction, True Crime'),
+('Anthony Doerr', 'Historical Fiction'),
+('Suzanne Collins', 'Adventure, War, Science Fiction, Romance, Action, Thriller'),
+('Elie Wiesel', 'Memoir'),
+('James Clear', 'Self-improvement, Nonfiction'),
+('Leigh Olsen', 'Childrens, Storytime, Fiction'),
+('Robert Greene', 'Nonfiction');
+
+SELECT b.Booktitle,b.Author,b.YearOfPublication,g.Genre 
+FROM Books b
+INNER JOIN Genres g ON b.Author = g.Author WHERE b.YearOfPublication =2023;
